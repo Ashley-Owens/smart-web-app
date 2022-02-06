@@ -20,7 +20,7 @@ function NavBar () {
                     <Link
                         variant="button"
                         color="text.primary"
-                        href="#"
+                        href="/"
                         sx={{ my: 1, mx: 1.5 }}
                     >
                         Home

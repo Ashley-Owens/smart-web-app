@@ -11,9 +11,20 @@ import Typography from '@mui/material/Typography';
 import GlobalStyles from '@mui/material/GlobalStyles';
 import Container from '@mui/material/Container';
 import leadStatusTypes from '../leadStatusTypes';
+import { useNavigate, createSearchParams } from 'react-router-dom';
 
 
 function HomeContent() {
+  const navigate = useNavigate();
+
+  function goToLeads(status) {
+    const params = { status };
+    navigate({
+      pathname: '/leads',
+      search: `?${createSearchParams(params)}`
+    });
+  };
+
   return (
     <React.Fragment>
       <GlobalStyles styles={{ ul: { margin: 0, padding: 0, listStyle: 'none' } }} />
@@ -39,7 +50,7 @@ function HomeContent() {
           {leadStatusTypes.map((statusType) => (
             <Grid
               item
-              key={statusType.title}
+              key={statusType.field}
               xs={12}
               md={4}
             >
@@ -66,9 +77,12 @@ function HomeContent() {
                   </Box>
                 </CardContent>
                 <CardActions>
-                  <Button fullWidth variant='outlined'>
-                    View Leads
-                  </Button>
+                    <Button
+                      onClick={() => goToLeads(statusType.field)}
+                      fullWidth variant='outlined'
+                    >
+                      View Leads
+                    </Button>
                 </CardActions>
               </Card>
             </Grid>
