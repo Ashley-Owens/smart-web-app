@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import NavBar from "../components/NavBar";
 import MaterialTable from 'material-table';
 import axios from 'axios';
+import moment from 'moment';
 
 function Leads () {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -41,7 +42,7 @@ function Leads () {
                         city: entry.city,
                         state: entry.state,
                         technician: entry.technician,
-                        dateCreated: entry.dateCreated,
+                        dateCreated: moment(entry.dateCreated).format('MM/DD/YYYY'),
                         status: entry.status,
                     };
                     rows.push(row);
