@@ -2,6 +2,27 @@
 
 A React web application that enables Smart Pest business personnel to view leads and calculate accurate bids for potential customers.
 
+The web application is run locally at this stage. Follow the install and run instructions below to test out the web front-end.
+
+### Installation Instructions
+1. Navigate to the project URL on GitHub and copy the clone URL
+2. Clone the project into your preferred directory
+3. Navigate to the project directory: cd smart-web-app
+4. In the command line type: npm install
+
+### Running Instructions
+1. You can run the web application locally:
+2. Install the project locally via the above instructions
+3. In your terminal at the project root folder, type: npm run start
+4. Web application will run at http://localhost:3000
+
+### App Usage Instructions
+1. You can use the web application as follows:
+2. Run the application with above instructions
+3. On the homepage you will see 6 cards. Click on the “View All” card’s button.
+4. You will be directed to a page showing a table with leads related to the Roach Assessment service.
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

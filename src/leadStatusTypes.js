@@ -1,27 +1,27 @@
 const leadStatusTypes = [
     {
         title: 'New',
-        photo: null,
+        field: 'new',
     },
     {
         title: 'Open',
-        photo: null,
+        field: 'open',
     },
     {
         title: 'Won',
-        photo: null,
+        field: 'won',
     },
     {
         title: 'Lost',
-        photo: null,
+        field: 'lost',
     },
     {
         title: 'Sent',
-        photo: null,
+        field: 'sent',
     },
     {
         title: 'All Leads',
-        photo: null,
+        field: 'allLeads',
     },
 ];
 
