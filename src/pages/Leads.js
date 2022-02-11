@@ -1,4 +1,4 @@
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from 'react';
 import NavBar from "../components/NavBar";
 import MaterialTable from 'material-table';
@@ -14,10 +14,11 @@ function Leads () {
     console.log('query params:', params);
 
     const tableColumns = [
+        {title: 'ID', field: 'id', hidden: true},
         {title: 'Property Name', field: 'propertyName'},
         {title: 'Service', field: 'service'},
+        {title: 'Unit Numbers', field: 'unitNums'},
         {title: 'Address', field: 'address'},
-        {title: 'City', field: 'city'},
         {title: 'State', field: 'state'},
         {title: 'Technician Name', field: 'technician'},
         {title: 'Date Created', field: 'dateCreated', defaultSort: 'desc'},
@@ -29,21 +30,22 @@ function Leads () {
     https://stackoverflow.com/questions/69261990/how-to-call-multiple-different-apis-using-useeffect-hook-in-react
     */
     useEffect(() => {
-        axios.get('https://smartpestapi.wn.r.appspot.com/roach-assessment')
+        axios.get('https://smartpestapi.wn.r.appspot.com/leads')
             .then(response => {
                 // handle success
-                console.log(response.data);
+                console.log('entities:', response.data.entities);
                 const rows = [];
-                response.data.forEach(entry => {
+                response.data.entities.forEach(entity => {
                     const row = {
-                        propertyName: entry.propertyName,
-                        service: 'Roach Assessment',
-                        address: entry.address,
-                        city: entry.city,
-                        state: entry.state,
-                        technician: entry.technician,
-                        dateCreated: moment(entry.dateCreated).format('MM/DD/YYYY'),
-                        status: entry.status,
+                        id: entity.id,
+                        propertyName: entity.propertyName,
+                        service: entity.service,
+                        unitNums: entity.unitNums,
+                        address: entity.address,
+                        state: entity.state,
+                        technician: entity.technician,
+                        dateCreated: moment(entity.dateCreated).format('MM/DD/YYYY'),
+                        status: entity.status,
                     };
                     rows.push(row);
                 });
@@ -55,6 +57,13 @@ function Leads () {
             });
     }, []);
     
+    const navigate = useNavigate();
+
+    function goToLeadDetails(id) {
+        navigate({
+            pathname: `/leads/${id}`,
+        });
+    };
 
     return (
         <div>
@@ -63,7 +72,17 @@ function Leads () {
                 columns={tableColumns}
                 data={tableData}
                 title='Leads'
-                options={{paginationType: 'stepped'}} 
+                actions={[
+                    {
+                      icon: 'description',
+                      tooltip: 'View lead details',
+                      onClick: (event, rowData) => goToLeadDetails(rowData.id)
+                    }
+                ]}
+                options={{
+                    paginationType: 'stepped',
+                    actionsColumnIndex: -1
+                }} 
             />
         </div>
     )
