@@ -22,7 +22,7 @@ function LeadDetails () {
     console.log('url param:', id);
     const formData = {};
     
-    axios.get(`https://smartpestapi.wn.r.appspot.com/leads/${id}`)
+    axios.get(`https://smartpestapi.wn.r.appspot.com/lead/${id}`)
         .then(response => {
             // handle success
             console.log('entity:', response.data);
