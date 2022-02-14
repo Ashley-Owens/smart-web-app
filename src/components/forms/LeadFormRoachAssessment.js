@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import { Grid } from '@material-ui/core';
-import Controls from "./controls/Controls";
+import Controls from "../controls/Controls";
 import { useForm, Form } from './useForm';
 import { Typography } from '@mui/material';
+import axios from 'axios';
 
 
-export default function EmployeeForm({ formData }) {
+export default function LeadForm({ formData }) {
 
+    const [formDisabled, setFormDisabled] = useState(true);
     const initialFieldValues = formData;
-    console.log('initialFieldValues:', initialFieldValues);
 
     // TODO: finish validation rules
     const validate = (fieldValues = values) => {
@@ -61,11 +62,28 @@ export default function EmployeeForm({ formData }) {
         resetForm
     } = useForm(initialFieldValues, true, validate);
 
-    const handleSubmit = e => {
+    const saveFormData = async (formData, id) => {
+        await axios.put(`https://smartpestapi.wn.r.appspot.com/lead/${id}`, {...formData})
+        .then(response => {
+            // handle success
+            console.log('PUT response:', response);
+        })
+        .catch(error => {
+            // handle error
+            console.log(error);
+        });
+    };
+
+    const handleSave = async e => {
         e.preventDefault();
         if (validate()){
-            // TODO: submit if form values are valid
+            saveFormData(values, values.id);
+            setFormDisabled(true);
         }
+    };
+
+    const enableEditMode = e => {
+        setFormDisabled(false);
     };
 
     // TODO: add all states?
@@ -75,14 +93,14 @@ export default function EmployeeForm({ formData }) {
     ]);
 
     return (
-        <Form onSubmit={handleSubmit}>
+        <Form onSubmit={handleSave}>
             <Typography
                 variant="h6"
                 color="textSecondary"
                 component="h2"
                 gutterBottom
             >
-                Contact Details
+                General Info
             </Typography>
             <Grid container>
                 <Grid container>
@@ -91,6 +109,7 @@ export default function EmployeeForm({ formData }) {
                             name="propertyName"
                             label="Property Name"
                             value={values.propertyName}
+                            isDisabled={formDisabled}
                             onChange={handleInputChange}
                             error={errors.propertyName}
                         />
@@ -100,6 +119,7 @@ export default function EmployeeForm({ formData }) {
                             name="contactName"
                             label="Contact Name"
                             value={values.contactName}
+                            isDisabled={formDisabled}
                             onChange={handleInputChange}
                             error={errors.contactName}
                         />
@@ -109,6 +129,7 @@ export default function EmployeeForm({ formData }) {
                             name="contactTitle"
                             label="Contact Title"
                             value={values.contactTitle}
+                            isDisabled={formDisabled}
                             onChange={handleInputChange}
                             error={errors.contactTitle}
                         />
@@ -120,6 +141,7 @@ export default function EmployeeForm({ formData }) {
                             name="address"
                             label="Address"
                             value={values.address}
+                            isDisabled={formDisabled}
                             onChange={handleInputChange}
                             error={errors.address}
                         />
@@ -129,6 +151,7 @@ export default function EmployeeForm({ formData }) {
                             name="city"
                             label="City"
                             value={values.city}
+                            isDisabled={formDisabled}
                             onChange={handleInputChange}
                             error={errors.city}
                         />
@@ -140,6 +163,7 @@ export default function EmployeeForm({ formData }) {
                                     name="state"
                                     label="State"
                                     value={values.state}
+                                    isDisabled={formDisabled}
                                     onChange={handleInputChange}
                                     options={getStates()}
                                     error={errors.state}
@@ -147,11 +171,12 @@ export default function EmployeeForm({ formData }) {
                             </Grid>
                             <Grid item xs={5}>
                                 <Controls.Input
-                                    name="zip"
+                                    name="zipCode"
                                     label="Zip Code"
-                                    value={values.zip}
+                                    value={values.zipCode}
+                                    isDisabled={formDisabled}
                                     onChange={handleInputChange}
-                                    error={errors.zip}
+                                    error={errors.zipCode}
                                 />
                             </Grid>
                         </Grid>
@@ -163,49 +188,79 @@ export default function EmployeeForm({ formData }) {
                 color="textSecondary"
                 component="h2"
                 gutterBottom
+                sx={{ pt: 1 }}
             >
-                Roach Assessment
+                Service Details
             </Typography>
             <Grid container>
-                <Grid item xs={4}>
-                    <Controls.Input
-                        name="buildingNums"
-                        label="Building Numbers"
-                        value={values.buildingNums}
-                        onChange={handleInputChange}
-                        error={errors.buildingNums}
-                    />
+                <Grid container>
+                    <Grid item xs={4}>
+                        <Controls.Input
+                            name="service"
+                            label="Service"
+                            value={values.service}
+                            isDisabled={formDisabled}
+                            onChange={handleInputChange}
+                            error={errors.service}
+                        />
+                    </Grid>
+                    <Grid item xs={4}>
+                        <Controls.Input
+                            name="targetPest"
+                            label="Target Pest"
+                            value={values.targetPest}
+                            isDisabled={formDisabled}
+                            onChange={handleInputChange}
+                            error={errors.targetPest}
+                        />
+                    </Grid>
+                    <Grid item xs={4}>
+                        <Controls.Input
+                            name="buildingNums"
+                            label="Building Numbers"
+                            value={values.buildingNums}
+                            isDisabled={formDisabled}
+                            onChange={handleInputChange}
+                            error={errors.buildingNums}
+                        />
+                    </Grid>
                 </Grid>
-                <Grid item xs={4}>
-                    <Controls.Input
-                        name="unitNums"
-                        label="Unit Numbers"
-                        value={values.unitNums}
-                        onChange={handleInputChange}
-                        error={errors.unitNums}
-                    />
-                </Grid>
-                <Grid item xs={4}>
-                    <Controls.Input
-                        name="notes"
-                        label="Notes"
-                        value={values.notes}
-                        onChange={handleInputChange}
-                        error={errors.notes}
-                    />
+                <Grid container>
+                    <Grid item xs={4}>
+                        <Controls.Input
+                            name="unitNums"
+                            label="Unit Numbers"
+                            value={values.unitNums}
+                            isDisabled={formDisabled}
+                            onChange={handleInputChange}
+                            error={errors.unitNums}
+                        />
+                    </Grid>
+                    <Grid item xs={4}>
+                        <Controls.Input
+                            name="notes"
+                            label="Notes"
+                            isMultiline={true}
+                            value={values.notes}
+                            isDisabled={formDisabled}
+                            onChange={handleInputChange}
+                            error={errors.notes}
+                        />
+                    </Grid>
                 </Grid>
             </Grid>
             <Grid container>
-                <Grid item xs={12}>
+                <Grid item xs={12} align="right">
                     <div>
                         <Controls.Button
-                            text="Edit Lead"
+                            text="Edit"
                             color="default"
-                            onClick={resetForm} 
+                            onClick={enableEditMode} 
                         />
                         <Controls.Button
                             type="submit"
-                            text="Create Bid" 
+                            text="Save"
+                            onClick={handleSave}
                         />
                     </div>
                 </Grid>

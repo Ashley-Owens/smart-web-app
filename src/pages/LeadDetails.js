@@ -1,59 +1,73 @@
+import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import NavBar from '../components/NavBar';
-import { useState, useEffect } from 'react'
-import { Paper } from '@mui/material';
-import { makeStyles } from '@material-ui/core';
-import LeadForm from '../components/LeadForm';
+import { Grid, Paper } from '@mui/material';
+import { makeStyles, Container } from '@material-ui/core';
+import LeadFormRoachAssessment from '../components/forms/LeadFormRoachAssessment';
 import axios from 'axios';
 import moment from 'moment';
 
 
 const useStyles = makeStyles(theme => ({
     pageContent: {
-        margin: theme.spacing(3),
+        // margin: theme.spacing(3),
         padding: theme.spacing(3)
     }
 }));
+
+function LeadForm ({ formData }) {
+    if (formData.service === 'Roach Assessment') {
+        return <LeadFormRoachAssessment formData={formData} />;
+    } else {
+        return <div>Unknown Service Type</div>;
+    }
+};
 
 function LeadDetails () {
 
     // we'll use id in url param to form requests to API
     const { id } = useParams();
-    console.log('url param:', id);
-    const formData = {};
+    const [formData, setFormData] = useState(null);
     
-    axios.get(`https://smartpestapi.wn.r.appspot.com/lead/${id}`)
+    useEffect(async () => {
+        await axios.get(`https://smartpestapi.wn.r.appspot.com/lead/${id}`)
         .then(response => {
             // handle success
-            console.log('entity:', response.data);
             const entity = response.data;
-
-            formData = {
-                id: entity.id,
-                propertyName: entity.propertyName,
-                service: entity.service,
-                address: entity.address,
-                state: entity.state,
-                technician: entity.technician,
-                dateCreated: moment(entity.dateCreated).format('MM/DD/YYYY'),
-                status: entity.status,
-            };
+            entity.dateCreated = moment(entity.dateCreated).format('MM/DD/YYYY')
+            setFormData(entity);
         })
         .catch(error => {
             // handle error
             console.log(error);
         });
+    }, []);
 
     const classes = useStyles();
-
 
     return (
         <>
             <NavBar />
-            <h1>Lead Details</h1>
-            <Paper className={classes.pageContent}>
-                <LeadForm formData={formData} />
-            </Paper>
+            {
+                formData ? (
+                    <Container maxWidth="lg" component="main">
+                        <Grid container>
+                            <Grid item xs={8}>
+                                <h2>Lead Details</h2>
+                                <h3>Status: {formData.status}</h3>
+                            </Grid>
+                            <Grid item xs={4} align="right" sx={{ pt: 3, pb: 1 }}>
+                                <div><strong>Date Created:</strong> {formData.dateCreated}</div>
+                                <div><strong>Made Contact:</strong> {formData.madeContact ? 'Yes' : 'No'}</div>
+                                <div><strong>Technician:</strong> {formData.technician}</div>
+                            </Grid>
+                        </Grid>
+                        <Paper className={classes.pageContent}>
+                            {formData ? <LeadForm formData={formData} /> : <div>...loading</div>}
+                        </Paper>
+                    </Container>
+                ) : <div>loading...</div>
+            }
         </>
     );
 };

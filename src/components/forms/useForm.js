@@ -1,10 +1,13 @@
-import React, { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { makeStyles } from "@material-ui/core";
 
 export function useForm(initialFieldValues, validateOnChange = false, validate) {
-
+    console.log('initialFieldValues - useForm:', initialFieldValues)
+    
     const [values, setValues] = useState(initialFieldValues);
     const [errors, setErrors] = useState({});
+
+    console.log('values - useForm:', values)
 
     const handleInputChange = e => {
         const { name, value } = e.target;
