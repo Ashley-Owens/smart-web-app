@@ -16,7 +16,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function LeadForm ({ formData }) {
-    if (formData.service === 'Roach Assessment') {
+    if (formData.service.toLowerCase() === 'roach assessment') {
         return <LeadFormRoachAssessment formData={formData} />;
     } else {
         return <div>Unknown Service Type</div>;
@@ -54,9 +54,9 @@ function LeadDetails () {
                         <Grid container>
                             <Grid item xs={8}>
                                 <h2>Lead Details</h2>
-                                <h3>Status: {formData.status}</h3>
+                                {/* <h3>Status: {formData.status}</h3> */}
                             </Grid>
-                            <Grid item xs={4} align="right" sx={{ pt: 3, pb: 1 }}>
+                            <Grid item xs={4} align="right" sx={{ pt: 1, pb: 1 }}>
                                 <div><strong>Date Created:</strong> {formData.dateCreated}</div>
                                 <div><strong>Made Contact:</strong> {formData.madeContact ? 'Yes' : 'No'}</div>
                                 <div><strong>Technician:</strong> {formData.technician}</div>

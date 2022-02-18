@@ -9,6 +9,7 @@ import axios from 'axios';
 export default function LeadForm({ formData }) {
 
     const [formDisabled, setFormDisabled] = useState(true);
+    const [editMode, setEditMode] = useState(false);
     const initialFieldValues = formData;
 
     // TODO: finish validation rules
@@ -17,11 +18,8 @@ export default function LeadForm({ formData }) {
         if ('propertyName' in fieldValues) {
             temp.propertyName = fieldValues.propertyName ? "" : "This field is required.";
         }
-        if ('contactName' in fieldValues) {
-            temp.contactName = fieldValues.contactName ? "" : "This field is required.";
-        }
-        if ('contactTitle' in fieldValues) {
-            temp.contactTitle = fieldValues.contactTitle ? "" : "This field is required.";
+        if ('status' in fieldValues) {
+            temp.status = fieldValues.status ? "" : "This field is required.";
         }
         if ('address' in fieldValues) {
             temp.address = fieldValues.address ? "" : "This field is required.";
@@ -32,17 +30,20 @@ export default function LeadForm({ formData }) {
         if ('state' in fieldValues) {
             temp.state = fieldValues.state ? "" : "This field is required.";
         }
-        if ('zip' in fieldValues) {
-            temp.zip = fieldValues.zip ? "" : "This field is required.";
+        if ('zipCode' in fieldValues) {
+            temp.zipCode = fieldValues.zipCode ? "" : "This field is required.";
+        }
+        if ('service' in fieldValues) {
+            temp.service = fieldValues.service ? "" : "This field is required.";
+        }
+        if ('targetPest' in fieldValues) {
+            temp.targetPest = fieldValues.targetPest ? "" : "This field is required.";
         }
         if ('buildingNums' in fieldValues) {
             temp.buildingNums = fieldValues.buildingNums ? "" : "This field is required.";
         }
         if ('unitNums' in fieldValues) {
             temp.unitNums = fieldValues.unitNums ? "" : "This field is required.";
-        }
-        if ('notes' in fieldValues) {
-            temp.notes = fieldValues.notes ? "" : "This field is required.";
         }
         setErrors({
             ...temp
@@ -84,6 +85,13 @@ export default function LeadForm({ formData }) {
 
     const enableEditMode = e => {
         setFormDisabled(false);
+        setEditMode(true);
+    };
+
+    const cancelEditMode = e => {
+        resetForm();
+        setFormDisabled(true);
+        setEditMode(false);
     };
 
     // TODO: add all states?
@@ -125,14 +133,28 @@ export default function LeadForm({ formData }) {
                         />
                     </Grid>
                     <Grid item xs={4}>
-                        <Controls.Input
-                            name="contactTitle"
-                            label="Contact Title"
-                            value={values.contactTitle}
-                            isDisabled={formDisabled}
-                            onChange={handleInputChange}
-                            error={errors.contactTitle}
-                        />
+                        <Grid container>
+                            <Grid item xs={5}>
+                                <Controls.Input
+                                    name="contactTitle"
+                                    label="Contact Title"
+                                    value={values.contactTitle}
+                                    isDisabled={formDisabled}
+                                    onChange={handleInputChange}
+                                    error={errors.contactTitle}
+                                />
+                            </Grid>
+                            <Grid item xs={5}>
+                                <Controls.Input
+                                    name="status"
+                                    label="Status"
+                                    value={values.status}
+                                    isDisabled={formDisabled}
+                                    onChange={handleInputChange}
+                                    error={errors.status}
+                                />
+                            </Grid>
+                        </Grid>
                     </Grid>
                 </Grid>
                 <Grid container>
@@ -162,7 +184,7 @@ export default function LeadForm({ formData }) {
                                 <Controls.Select
                                     name="state"
                                     label="State"
-                                    value={values.state}
+                                    value={values.state.toUpperCase()}
                                     isDisabled={formDisabled}
                                     onChange={handleInputChange}
                                     options={getStates()}
@@ -252,16 +274,27 @@ export default function LeadForm({ formData }) {
             <Grid container>
                 <Grid item xs={12} align="right">
                     <div>
-                        <Controls.Button
-                            text="Edit"
-                            color="default"
-                            onClick={enableEditMode} 
-                        />
-                        <Controls.Button
-                            type="submit"
-                            text="Save"
-                            onClick={handleSave}
-                        />
+                        {
+                            editMode ?
+                            <>
+                                <Controls.Button
+                                    text="Cancel"
+                                    color="default"
+                                    onClick={cancelEditMode}
+                                />
+                                <Controls.Button
+                                    type="submit"
+                                    text="Save"
+                                    onClick={handleSave}
+                                />
+                            </> :
+                            <Controls.Button
+                                text="Edit"
+                                color="default"
+                                onClick={enableEditMode}
+                            />
+
+                        }
                     </div>
                 </Grid>
             </Grid>
