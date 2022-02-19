@@ -1,13 +1,10 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { makeStyles } from "@material-ui/core";
 
 export function useForm(initialFieldValues, validateOnChange = false, validate) {
-    console.log('initialFieldValues - useForm:', initialFieldValues)
     
     const [values, setValues] = useState(initialFieldValues);
     const [errors, setErrors] = useState({});
-
-    console.log('values - useForm:', values)
 
     const handleInputChange = e => {
         const { name, value } = e.target;
@@ -16,7 +13,7 @@ export function useForm(initialFieldValues, validateOnChange = false, validate) 
             [name]: value
         });
         if (validateOnChange) {
-            validate({ [name]: value });
+            validate({ [name]: value }, errors, setErrors);
         }
     };
 
@@ -38,7 +35,7 @@ export function useForm(initialFieldValues, validateOnChange = false, validate) 
 const useStyles = makeStyles(theme => ({
     root: {
         '& .MuiFormControl-root': {
-            width: '80%',
+            width: '90%',
             margin: theme.spacing(1)
         }
     }

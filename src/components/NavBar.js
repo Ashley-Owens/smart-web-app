@@ -16,7 +16,6 @@ function NavBar () {
             <Toolbar sx={{ flexWrap: 'wrap' }}>
                 <Typography variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>
                     <Link
-                        // color="text.primary"
                         href="/"
                     >
                         <img src={smartPestLogo} alt="smart-pest-logo" />
