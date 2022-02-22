@@ -22,6 +22,15 @@ export default function LeadFieldsGeneral(props) {
         { id: '2', title: 'open' },
         { id: '3', title: 'closed' },
     ]);
+    
+    const getTitles = ()=>([
+        { id: '1', title: 'Assistant Manager' },
+        { id: '2', title: 'Leasing Agent' },
+        { id: '3', title: 'Maintenance' },
+        { id: '3', title: 'Manager' },
+        { id: '3', title: 'Regional Manager' },
+        { id: '3', title: 'Hmmm...' },
+    ]);
 
     return (
         <Grid container>
@@ -49,12 +58,13 @@ export default function LeadFieldsGeneral(props) {
                 <Grid item xs={4}>
                     <Grid container>
                         <Grid item xs={5}>
-                            <Controls.Input
+                            <Controls.Select
                                 name="contactTitle"
                                 label="Contact Title"
                                 value={values.contactTitle || ""}
                                 isDisabled={formDisabled}
                                 onChange={handleInputChange}
+                                options={getTitles()}
                                 error={errors.contactTitle}
                             />
                         </Grid>
