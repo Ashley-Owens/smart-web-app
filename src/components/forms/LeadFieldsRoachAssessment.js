@@ -18,7 +18,7 @@ export default function LeadFieldsRoachAssessment(props) {
                     <Controls.Input
                         name="service"
                         label="Service"
-                        value={values.service}
+                        value={values.service || ""}
                         isDisabled={true}
                         onChange={handleInputChange}
                         error={errors.service}
@@ -28,7 +28,7 @@ export default function LeadFieldsRoachAssessment(props) {
                     <Controls.Input
                         name="targetPest"
                         label="Target Pest"
-                        value={values.targetPest}
+                        value={values.targetPest || ""}
                         isDisabled={formDisabled}
                         onChange={handleInputChange}
                         error={errors.targetPest}
@@ -38,7 +38,7 @@ export default function LeadFieldsRoachAssessment(props) {
                     <Controls.Input
                         name="buildingNums"
                         label="Building Numbers"
-                        value={values.buildingNums}
+                        value={values.buildingNums || ""}
                         isDisabled={formDisabled}
                         onChange={handleInputChange}
                         error={errors.buildingNums}
@@ -50,7 +50,7 @@ export default function LeadFieldsRoachAssessment(props) {
                     <Controls.Input
                         name="unitNums"
                         label="Unit Numbers"
-                        value={values.unitNums}
+                        value={values.unitNums || ""}
                         isDisabled={formDisabled}
                         onChange={handleInputChange}
                         error={errors.unitNums}
@@ -61,7 +61,7 @@ export default function LeadFieldsRoachAssessment(props) {
                         name="notes"
                         label="Notes"
                         isMultiline={true}
-                        value={values.notes}
+                        value={values.notes || ""}
                         isDisabled={formDisabled}
                         onChange={handleInputChange}
                         error={errors.notes}

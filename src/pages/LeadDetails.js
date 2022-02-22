@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import NavBar from '../components/NavBar';
 import { Grid, Paper } from '@mui/material';
 import { makeStyles, Container } from '@material-ui/core';
@@ -20,8 +20,8 @@ function LeadDetails () {
     const { id } = useParams();
     const [formData, setFormData] = useState(null);
 
-    useEffect(async () => {
-        await axios.get(`https://smartpestapi.wn.r.appspot.com/lead/${id}`)
+    useEffect(() => {
+        axios.get(`https://smartpestapi.wn.r.appspot.com/lead/${id}`)
         .then(response => {
             // handle success
             const entity = response.data;

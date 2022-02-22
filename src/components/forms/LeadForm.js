@@ -17,7 +17,14 @@ function LeadForm ({ formData }) {
 
     // TODO: finish validation rules
     const validate = (fieldValues = values) => {
+        console.log('validation fieldvalues:', fieldValues);
         let temp = { ...errors };
+        if ('contactName' in fieldValues && fieldValues.madeContact === true) {
+            temp.contactName = fieldValues.contactName ? "" : "This field is required when contact has been made.";
+        }
+        if ('contactTitle' in fieldValues && fieldValues.madeContact === true) {
+            temp.contactTitle = fieldValues.contactTitle ? "" : "This field is required when contact has been made.";
+        }
         if ('propertyName' in fieldValues) {
             temp.propertyName = fieldValues.propertyName ? "" : "This field is required.";
         }
@@ -60,8 +67,8 @@ function LeadForm ({ formData }) {
             ...temp
         });
 
-        if (fieldValues == values) {
-            return Object.values(temp).every(x => x == "");
+        if (fieldValues === values) {
+            return Object.values(temp).every(x => x === "");
         }
     };
 

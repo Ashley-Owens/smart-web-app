@@ -17,6 +17,12 @@ export default function LeadFieldsGeneral(props) {
         { id: '2', title: 'NV' },
     ]);
 
+    const getStatuses = ()=>([
+        { id: '1', title: 'new' },
+        { id: '2', title: 'open' },
+        { id: '3', title: 'closed' },
+    ]);
+
     return (
         <Grid container>
             <Grid container>
@@ -24,7 +30,7 @@ export default function LeadFieldsGeneral(props) {
                     <Controls.Input
                         name="propertyName"
                         label="Property Name"
-                        value={values.propertyName}
+                        value={values.propertyName || ""}
                         isDisabled={formDisabled}
                         onChange={handleInputChange}
                         error={errors.propertyName}
@@ -34,7 +40,7 @@ export default function LeadFieldsGeneral(props) {
                     <Controls.Input
                         name="contactName"
                         label="Contact Name"
-                        value={values.contactName}
+                        value={values.contactName || ""}
                         isDisabled={formDisabled}
                         onChange={handleInputChange}
                         error={errors.contactName}
@@ -46,19 +52,20 @@ export default function LeadFieldsGeneral(props) {
                             <Controls.Input
                                 name="contactTitle"
                                 label="Contact Title"
-                                value={values.contactTitle}
+                                value={values.contactTitle || ""}
                                 isDisabled={formDisabled}
                                 onChange={handleInputChange}
                                 error={errors.contactTitle}
                             />
                         </Grid>
                         <Grid item xs={5}>
-                            <Controls.Input
+                            <Controls.Select
                                 name="status"
                                 label="Status"
-                                value={values.status}
+                                value={values.status || ""}
                                 isDisabled={formDisabled}
                                 onChange={handleInputChange}
+                                options={getStatuses()}
                                 error={errors.status}
                             />
                         </Grid>
@@ -70,7 +77,7 @@ export default function LeadFieldsGeneral(props) {
                     <Controls.Input
                         name="address"
                         label="Address"
-                        value={values.address}
+                        value={values.address || ""}
                         isDisabled={formDisabled}
                         onChange={handleInputChange}
                         error={errors.address}
@@ -80,7 +87,7 @@ export default function LeadFieldsGeneral(props) {
                     <Controls.Input
                         name="city"
                         label="City"
-                        value={values.city}
+                        value={values.city || ""}
                         isDisabled={formDisabled}
                         onChange={handleInputChange}
                         error={errors.city}
@@ -92,7 +99,7 @@ export default function LeadFieldsGeneral(props) {
                             <Controls.Select
                                 name="state"
                                 label="State"
-                                value={values.state.toUpperCase()}
+                                value={values.state.toUpperCase() || ""}
                                 isDisabled={formDisabled}
                                 onChange={handleInputChange}
                                 options={getStates()}
@@ -103,7 +110,7 @@ export default function LeadFieldsGeneral(props) {
                             <Controls.Input
                                 name="zipCode"
                                 label="Zip Code"
-                                value={values.zipCode}
+                                value={values.zipCode || ""}
                                 isDisabled={formDisabled}
                                 onChange={handleInputChange}
                                 error={errors.zipCode}
