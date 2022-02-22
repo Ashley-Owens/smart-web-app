@@ -30,31 +30,37 @@ function Leads () {
     https://stackoverflow.com/questions/69261990/how-to-call-multiple-different-apis-using-useeffect-hook-in-react
     */
     useEffect(() => {
-        axios.get('https://smartpestapi.wn.r.appspot.com/leads')
-            .then(response => {
-                // handle success
-                console.log('entities:', response.data.entities);
-                const rows = [];
-                response.data.entities.forEach(entity => {
-                    const row = {
-                        id: entity.id,
-                        propertyName: entity.propertyName,
-                        service: entity.service,
-                        unitNums: entity.unitNums,
-                        address: entity.address,
-                        state: entity.state,
-                        technician: entity.technician,
-                        dateCreated: moment(entity.dateCreated).format('MM/DD/YYYY'),
-                        status: entity.status,
-                    };
-                    rows.push(row);
-                });
-                setTableData(rows);
-            })
-            .catch(error => {
-                // handle error
-                console.log(error);
+        axios.post('https://smartpestapi.wn.r.appspot.com/leads/search', {
+            search: {
+                filters: [
+                    ['status', '=', params.status],
+                ]
+            }
+        })
+        .then(response => {
+            // handle success
+            console.log('entities:', response.data.entities);
+            const rows = [];
+            response.data.entities.forEach(entity => {
+                const row = {
+                    id: entity.id,
+                    propertyName: entity.propertyName,
+                    service: entity.service,
+                    unitNums: entity.unitNums,
+                    address: entity.address,
+                    state: entity.state,
+                    technician: entity.technician,
+                    dateCreated: moment(entity.dateCreated).format('MM/DD/YYYY'),
+                    status: entity.status,
+                };
+                rows.push(row);
             });
+            setTableData(rows);
+        })
+        .catch(error => {
+            // handle error
+            console.log(error);
+        });
     }, []);
     
     const navigate = useNavigate();
