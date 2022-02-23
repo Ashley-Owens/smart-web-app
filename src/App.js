@@ -2,6 +2,7 @@ import './App.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './pages/Home';
 import Leads from './pages/Leads';
+import LeadDetails from './pages/LeadDetails';
 
 
 
@@ -12,6 +13,7 @@ function App() {
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="leads" element={<Leads />} />
+                    <Route path="leads/:id" element={<LeadDetails />} />
                 </Routes>
             </div>
         </Router>
