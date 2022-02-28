@@ -25,10 +25,6 @@ function Leads () {
         {title: 'Status', field: 'status'},
     ];
 
-    /* 
-    When needing to call multiple APIs, try this:
-    https://stackoverflow.com/questions/69261990/how-to-call-multiple-different-apis-using-useeffect-hook-in-react
-    */
     useEffect(() => {
         axios.post('https://smartpestapi.wn.r.appspot.com/leads/search', {
             search: {

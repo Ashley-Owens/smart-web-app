@@ -27,9 +27,9 @@ export default function LeadFieldsGeneral(props) {
         { id: '1', title: 'Assistant Manager' },
         { id: '2', title: 'Leasing Agent' },
         { id: '3', title: 'Maintenance' },
-        { id: '3', title: 'Manager' },
-        { id: '3', title: 'Regional Manager' },
-        { id: '3', title: 'Hmmm...' },
+        { id: '4', title: 'Manager' },
+        { id: '5', title: 'Regional Manager' },
+        { id: '6', title: 'Hmmm...' },
     ]);
 
     return (

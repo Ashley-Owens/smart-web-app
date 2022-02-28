@@ -1,9 +1,9 @@
 import './App.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Home from './pages/Home';
-import Leads from './pages/Leads';
-import LeadDetails from './pages/LeadDetails';
-
+import HomePage from './pages/HomePage';
+import LeadsPage from './pages/LeadsPage';
+import LeadDetailsPage from './pages/LeadDetailsPage';
+import SearchLeadsPage from './pages/SearchLeadsPage';
 
 
 function App() {
@@ -11,9 +11,10 @@ function App() {
         <Router>
             <div className="App">
                 <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="leads" element={<Leads />} />
-                    <Route path="leads/:id" element={<LeadDetails />} />
+                    <Route path="/" element={<HomePage />} />
+                    <Route path="leads" element={<LeadsPage />} />
+                    <Route path="leads/:id" element={<LeadDetailsPage />} />
+                    <Route path="leads/search" element={<SearchLeadsPage />} />
                 </Routes>
             </div>
         </Router>
