@@ -3,6 +3,7 @@ import Button from '@mui/material/Button';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
+import smartPestLogo from '../images/smart-pest-logo.png';
 
 function NavBar () {
     return (
@@ -14,18 +15,14 @@ function NavBar () {
         >
             <Toolbar sx={{ flexWrap: 'wrap' }}>
                 <Typography variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>
-                    SMART Pest
-                </Typography>
-                <nav>
                     <Link
-                        variant="button"
-                        color="text.primary"
                         href="/"
-                        sx={{ my: 1, mx: 1.5 }}
                     >
-                        Home
+                        <img src={smartPestLogo} alt="smart-pest-logo" />
                     </Link>
-                </nav>
+                    
+                </Typography>
+                
                 <Button href="#" variant="outlined" sx={{ my: 1, mx: 1.5 }}>
                     Logout
                 </Button>

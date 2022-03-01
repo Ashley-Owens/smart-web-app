@@ -39,14 +39,14 @@ function HomeContent() {
           color="text.primary"
           gutterBottom
         >
-          Lead Status Types
+          Leads Dashboard
         </Typography>
       </Container>
       {/* End page title */}
 
       {/* Start cards */}
       <Container maxWidth="md" component="main">
-        <Grid container spacing={5} alignItems="flex-end">
+        <Grid container spacing={5} alignItems="flex-end" columns={8}>
           {leadStatusTypes.map((statusType) => (
             <Grid
               item
@@ -81,7 +81,7 @@ function HomeContent() {
                       onClick={() => goToLeads(statusType.field)}
                       fullWidth variant='outlined'
                     >
-                      View Leads
+                      View {statusType.title} Leads
                     </Button>
                 </CardActions>
               </Card>
