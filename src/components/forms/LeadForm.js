@@ -17,7 +17,6 @@ function LeadForm ({ formData }) {
 
     // TODO: finish validation rules
     const validate = (fieldValues = values) => {
-        console.log('validation fieldvalues:', fieldValues);
         let temp = { ...errors };
         if ('contactName' in fieldValues && fieldValues.madeContact === true) {
             temp.contactName = fieldValues.contactName ? "" : "This field is required when contact has been made.";

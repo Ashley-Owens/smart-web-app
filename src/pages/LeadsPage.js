@@ -42,7 +42,7 @@ function Leads () {
                     id: entity.id,
                     propertyName: entity.propertyName,
                     service: entity.service,
-                    unitNums: entity.unitNums,
+                    unitNums: typeof entity.unitNums === 'object' ? entity.unitNums.join(', ') : null,
                     address: entity.address,
                     state: entity.state,
                     technician: entity.technician,
@@ -82,8 +82,9 @@ function Leads () {
                     }
                 ]}
                 options={{
-                    paginationType: 'stepped',
-                    actionsColumnIndex: -1
+                    actionsColumnIndex: -1,
+                    pageSize: 20,
+                    pageSizeOptions: [20, 25, 30]
                 }} 
             />
         </div>

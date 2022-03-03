@@ -2,9 +2,14 @@ import Controls from '../controls/Controls';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import { useForm, Form } from './useForm';
+import BasicDatePicker from '../BasicDatePicker';
+import { useState } from 'react';
 
 
 export default function SearchForm ({ setPropFilters, setHaveSearched }) {
+
+    const [startDate, setStartDate] = useState(null);
+    const [endDate, setEndDate] = useState(null);
 
     const validate = (fieldValues = values) => {
         let temp = { ...errors };
@@ -24,6 +29,11 @@ export default function SearchForm ({ setPropFilters, setHaveSearched }) {
         }
     };
 
+    const initialValues = {
+        filterProperty: '', 
+        searchValue: ''
+    };
+
     const {
         values,
         setValues,
@@ -31,23 +41,45 @@ export default function SearchForm ({ setPropFilters, setHaveSearched }) {
         setErrors,
         handleInputChange,
         resetForm
-    } = useForm({filterProperty: '', searchValue: ''}, true, validate);
+    } = useForm(initialValues, true, validate);
 
     const getFilterProperties = ()=>([
-        { id: '1', title: 'propertyName' },
-        { id: '2', title: 'technician' },
-        { id: '3', title: 'service' },
-        { id: '4', title: 'targetPest' },
-        { id: '5', title: 'state' },
-        { id: '6', title: 'status' },
-        { id: '7', title: 'dateCreated' }
+        { id: '1', title: 'Property Name' },
+        { id: '2', title: 'Technician' },
+        { id: '3', title: 'Service' },
+        { id: '4', title: 'Target Pest' },
+        { id: '5', title: 'State' },
+        { id: '6', title: 'Status' },
     ]);
 
     const handleSearch = async e => {
         e.preventDefault();
-        if (validate()){
+        if (validate() && startDate && endDate){
+            let filterProperty = null;
+            switch (values.filterProperty) {
+                case 'Property Name':
+                    filterProperty = 'propertyName';
+                    break;
+                case 'Technician':
+                    filterProperty = 'technician';
+                    break;
+                case 'Service':
+                    filterProperty = 'service';
+                    break;
+                case 'Target Pest':
+                    filterProperty = 'targetPest';
+                    break;
+                case 'State':
+                    filterProperty = 'state';
+                    break;
+                case 'Status':
+                    filterProperty = 'status';
+                    break;
+            }
             let propFilters = [
-                [values.filterProperty, '=', values.searchValue]
+                ['dateCreated', '>=', startDate.startOf('day')],
+                ['dateCreated', '<=', endDate.endOf('day')],
+                [filterProperty, '=', values.searchValue]
             ];
             setPropFilters(propFilters);
             setHaveSearched(true);
@@ -56,7 +88,7 @@ export default function SearchForm ({ setPropFilters, setHaveSearched }) {
 
     return (
         <Form onSubmit={handleSearch}>
-            <Grid container alignItems="center" justifyContent="center">
+            <Grid container alignItems="center" justifyContent="center" sx={{ pt: 4, pb: 4 }}>
                 <Grid item xs={12}>
                     <Typography
                         component="h1"
@@ -67,8 +99,25 @@ export default function SearchForm ({ setPropFilters, setHaveSearched }) {
                     >
                         Search Leads
                     </Typography>
+                    <Grid container justifyContent="center" alignItems="center">
+                        <Grid item xs={2}>
+                            <BasicDatePicker 
+                                label="Start Date"
+                                value={startDate}
+                                setValue={setStartDate}
+                            />
+                        </Grid>
+                        <Grid item xs={2}>
+                            <BasicDatePicker
+                                label="End Date"
+                                value={endDate}
+                                setValue={setEndDate}
+                            />
+                        </Grid> 
+                    </Grid>
+                    <Grid container></Grid>
                     <Grid container justifyContent="center">
-                        <Grid item xs={4}>
+                        <Grid item xs={2}>
                             <Controls.Select
                                 name="filterProperty"
                                 label="Property to Filter"
@@ -78,7 +127,7 @@ export default function SearchForm ({ setPropFilters, setHaveSearched }) {
                                 error={errors.filterProperty}
                             />
                         </Grid>  
-                        <Grid item xs={4}>
+                        <Grid item xs={2}>
                             <Controls.Input
                                 name="searchValue"
                                 label="Search Value"

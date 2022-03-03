@@ -24,12 +24,12 @@ export default function LeadFieldsGeneral(props) {
     ]);
     
     const getTitles = ()=>([
-        { id: '1', title: 'Assistant Manager' },
-        { id: '2', title: 'Leasing Agent' },
-        { id: '3', title: 'Maintenance' },
-        { id: '4', title: 'Manager' },
-        { id: '5', title: 'Regional Manager' },
-        { id: '6', title: 'Hmmm...' },
+        { id: '1', title: 'assistant manager' },
+        { id: '2', title: 'leasing agent' },
+        { id: '3', title: 'maintenance' },
+        { id: '4', title: 'manager' },
+        { id: '5', title: 'regional manager' },
+        { id: '6', title: 'hmmm...' },
     ]);
 
     return (
