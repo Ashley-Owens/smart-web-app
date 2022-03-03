@@ -50,7 +50,7 @@ function SearchLeadsPage() {
                 result.data.entities.forEach(entity => {
                     entity.dateCreated = moment(entity.dateCreated).format('MM/DD/YYYY');
                     if (entity.unitNums) {
-                        entity.unitNums = entity.unitNums.join(', ');
+                        entity.unitNums = typeof entity.unitNums === 'object' ? entity.unitNums.join(', ') : null;
                     }
                 });
                 let currPage = query.page + 1;

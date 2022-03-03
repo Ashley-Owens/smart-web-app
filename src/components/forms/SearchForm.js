@@ -54,7 +54,7 @@ export default function SearchForm ({ setPropFilters, setHaveSearched }) {
 
     const handleSearch = async e => {
         e.preventDefault();
-        if (validate() && startDate && endDate){
+        if (validate()){
             let filterProperty = null;
             switch (values.filterProperty) {
                 case 'Property Name':
@@ -77,10 +77,12 @@ export default function SearchForm ({ setPropFilters, setHaveSearched }) {
                     break;
             }
             let propFilters = [
-                ['dateCreated', '>=', startDate.startOf('day')],
-                ['dateCreated', '<=', endDate.endOf('day')],
+                // ['dateCreated', '>=', startDate.startOf('day')],
+                // ['dateCreated', '<=', endDate.endOf('day')],
                 [filterProperty, '=', values.searchValue]
             ];
+            if (endDate) propFilters.unshift(['dateCreated', '<=', endDate.endOf('day')]);
+            if (startDate) propFilters.unshift(['dateCreated', '>=', startDate.startOf('day')]);
             setPropFilters(propFilters);
             setHaveSearched(true);
         }
