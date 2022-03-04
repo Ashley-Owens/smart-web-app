@@ -5,6 +5,7 @@ import { Grid } from '@mui/material';
 import Controls from "../controls/Controls";
 import LeadFieldsGeneral from './LeadFieldsGeneral';
 import LeadFieldsRoachAssessment from './LeadFieldsRoachAssessment';
+import LeadFieldsBedBugInspection from './LeadFieldsBedBugInspection';
 import axios from 'axios';
 
 
@@ -15,7 +16,8 @@ function LeadForm ({ formData }) {
 
     const initialFieldValues = formData;
 
-    // TODO: finish validation rules
+    // TODO: would love to extract this validation function somewhere else, however
+    // having trouble doing that and keeping access to values, errors, and setErrors
     const validate = (fieldValues = values) => {
         let temp = { ...errors };
         if ('contactName' in fieldValues && fieldValues.madeContact === true) {
@@ -58,6 +60,23 @@ function LeadForm ({ formData }) {
                     temp.unitNums = fieldValues.unitNums ? "" : "This field is required.";
                 }
                 break;
+            case 'bed bug inspection':
+                if ('service' in fieldValues) {
+                    temp.service = fieldValues.service ? "" : "This field is required.";
+                }
+                if ('targetPest' in fieldValues) {
+                    temp.targetPest = fieldValues.targetPest ? "" : "This field is required.";
+                }
+                if ('inspectionType' in fieldValues) {
+                    temp.inspectionType = fieldValues.inspectionType ? "" : "This field is required.";
+                }
+                if ('unitNums' in fieldValues) {
+                    temp.unitNums = fieldValues.unitNums ? "" : "This field is required.";
+                }
+                if ('reason' in fieldValues && ['k9 inspection', 'full inspection'].includes(values.inspectionType)) {
+                    temp.reason = fieldValues.reason ? "" : "This field is required.";
+                }
+                break;
             default:
                 break;
         };
@@ -71,7 +90,7 @@ function LeadForm ({ formData }) {
         }
     };
 
-    const {
+    var {
         values,
         setValues,
         errors,
@@ -178,6 +197,15 @@ function LeadFieldsService ({ values, formDisabled, handleInputChange, errors })
         case 'roach assessment':
             return (
                 <LeadFieldsRoachAssessment
+                    values={values}
+                    formDisabled={formDisabled}
+                    handleInputChange={handleInputChange}
+                    errors={errors}
+                />
+            );
+        case 'bed bug inspection':
+            return (
+                <LeadFieldsBedBugInspection
                     values={values}
                     formDisabled={formDisabled}
                     handleInputChange={handleInputChange}
