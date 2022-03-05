@@ -8,12 +8,14 @@ export function useForm(initialFieldValues, validateOnChange = false, validate) 
 
     const handleInputChange = e => {
         const { name, value } = e.target;
+        console.log('name, value:', name + ', ' + value)
         setValues({
             ...values,
             [name]: value
         });
         if (validateOnChange) {
-            validate({ [name]: value }, errors, setErrors);
+            // validate({ [name]: value }, errors, setErrors);
+            validate(errors, setErrors, { [name]: value });
         }
     };
 
