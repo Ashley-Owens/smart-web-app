@@ -3,7 +3,7 @@ import Controls from "../controls/Controls";
 import { Typography } from '@mui/material';
 
 
-export default function LeadFieldsSpider(props) {
+export default function LeadFieldsDewebbing(props) {
 
     const {
         values,

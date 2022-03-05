@@ -10,7 +10,7 @@ import LeadFieldsBedBugTreatment from './LeadFieldsBedBugTreatment';
 import LeadFieldsExtremeBedBug from './LeadFieldsExtremeBedBug';
 import LeadFieldsBirdExclusion from './LeadFieldsBirdExclusion';
 import LeadFieldsBirdTrapping from './LeadFieldsBirdTrapping';
-import LeadFieldsSpider from './LeadFieldsSpider';
+import LeadFieldsDewebbing from './LeadFieldsDewebbing';
 import LeadFieldsExteriorRodent from './LeadFieldsExteriorRodent';
 import LeadFieldsInteriorRodent from './LeadFieldsInteriorRodent';
 import LeadFieldsRodentExclusion from './LeadFieldsRodentExclusion';
@@ -185,7 +185,7 @@ function LeadFieldsService ({ values, formDisabled, handleInputChange, errors })
             );
         case 'dewebbing':
             return (
-                <LeadFieldsSpider
+                <LeadFieldsDewebbing
                     values={values}
                     formDisabled={formDisabled}
                     handleInputChange={handleInputChange}
