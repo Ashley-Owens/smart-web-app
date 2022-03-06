@@ -121,8 +121,8 @@ export default function LeadFieldsBirdExclusion(props) {
                     <Controls.Input
                         name="boomLiftHeight"
                         label="Height of Boomlift (inches)"
-                        value={values.boomLiftHeight || ""}
-                        isDisabled={formDisabled}
+                        value={values.equipment === 'boomlift' ? values.boomLiftHeight || "" : ""}
+                        isDisabled={formDisabled || values.equipment !== 'boomlift'}
                         onChange={handleInputChange}
                         error={errors.boomLiftHeight}
                     />
