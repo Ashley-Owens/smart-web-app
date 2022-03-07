@@ -25,10 +25,6 @@ function Leads () {
         {title: 'Status', field: 'status'},
     ];
 
-    /* 
-    When needing to call multiple APIs, try this:
-    https://stackoverflow.com/questions/69261990/how-to-call-multiple-different-apis-using-useeffect-hook-in-react
-    */
     useEffect(() => {
         axios.post('https://smartpestapi.wn.r.appspot.com/leads/search', {
             search: {
@@ -46,7 +42,7 @@ function Leads () {
                     id: entity.id,
                     propertyName: entity.propertyName,
                     service: entity.service,
-                    unitNums: entity.unitNums,
+                    unitNums: typeof entity.unitNums === 'object' ? entity.unitNums.join(', ') : null,
                     address: entity.address,
                     state: entity.state,
                     technician: entity.technician,
@@ -86,8 +82,9 @@ function Leads () {
                     }
                 ]}
                 options={{
-                    paginationType: 'stepped',
-                    actionsColumnIndex: -1
+                    actionsColumnIndex: -1,
+                    pageSize: 20,
+                    pageSizeOptions: [20, 25, 30]
                 }} 
             />
         </div>

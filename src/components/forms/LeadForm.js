@@ -5,6 +5,16 @@ import { Grid } from '@mui/material';
 import Controls from "../controls/Controls";
 import LeadFieldsGeneral from './LeadFieldsGeneral';
 import LeadFieldsRoachAssessment from './LeadFieldsRoachAssessment';
+import LeadFieldsBedBugInspection from './LeadFieldsBedBugInspection';
+import LeadFieldsBedBugTreatment from './LeadFieldsBedBugTreatment';
+import LeadFieldsExtremeBedBug from './LeadFieldsExtremeBedBug';
+import LeadFieldsBirdExclusion from './LeadFieldsBirdExclusion';
+import LeadFieldsBirdTrapping from './LeadFieldsBirdTrapping';
+import LeadFieldsDewebbing from './LeadFieldsDewebbing';
+import LeadFieldsExteriorRodent from './LeadFieldsExteriorRodent';
+import LeadFieldsInteriorRodent from './LeadFieldsInteriorRodent';
+import LeadFieldsRodentExclusion from './LeadFieldsRodentExclusion';
+import validate from './leadFormValidation';
 import axios from 'axios';
 
 
@@ -15,75 +25,18 @@ function LeadForm ({ formData }) {
 
     const initialFieldValues = formData;
 
-    // TODO: finish validation rules
-    const validate = (fieldValues = values) => {
-        console.log('validation fieldvalues:', fieldValues);
-        let temp = { ...errors };
-        if ('contactName' in fieldValues && fieldValues.madeContact === true) {
-            temp.contactName = fieldValues.contactName ? "" : "This field is required when contact has been made.";
-        }
-        if ('contactTitle' in fieldValues && fieldValues.madeContact === true) {
-            temp.contactTitle = fieldValues.contactTitle ? "" : "This field is required when contact has been made.";
-        }
-        if ('propertyName' in fieldValues) {
-            temp.propertyName = fieldValues.propertyName ? "" : "This field is required.";
-        }
-        if ('status' in fieldValues) {
-            temp.status = fieldValues.status ? "" : "This field is required.";
-        }
-        if ('address' in fieldValues) {
-            temp.address = fieldValues.address ? "" : "This field is required.";
-        }
-        if ('city' in fieldValues) {
-            temp.city = fieldValues.city ? "" : "This field is required.";
-        }
-        if ('state' in fieldValues) {
-            temp.state = fieldValues.state ? "" : "This field is required.";
-        }
-        if ('zipCode' in fieldValues) {
-            temp.zipCode = fieldValues.zipCode ? "" : "This field is required.";
-        }
-
-        switch (values.service.toLowerCase()) {
-            case 'roach assessment':
-                if ('service' in fieldValues) {
-                    temp.service = fieldValues.service ? "" : "This field is required.";
-                }
-                if ('targetPest' in fieldValues) {
-                    temp.targetPest = fieldValues.targetPest ? "" : "This field is required.";
-                }
-                if ('buildingNums' in fieldValues) {
-                    temp.buildingNums = fieldValues.buildingNums ? "" : "This field is required.";
-                }
-                if ('unitNums' in fieldValues) {
-                    temp.unitNums = fieldValues.unitNums ? "" : "This field is required.";
-                }
-                break;
-            default:
-                break;
-        };
-        
-        setErrors({
-            ...temp
-        });
-
-        if (fieldValues === values) {
-            return Object.values(temp).every(x => x === "");
-        }
-    };
-
-    const {
+    var {
         values,
         setValues,
         errors,
         setErrors,
         handleInputChange,
         resetForm
-    } = useForm(initialFieldValues, true, validate);
+    } = useForm(initialFieldValues, false, validate);
 
     const handleSave = async e => {
         e.preventDefault();
-        if (validate()){
+        if (validate(errors, setErrors, values)){
             saveFormData(values, values.id);
             setFormDisabled(true);
             setEditMode(false);
@@ -185,9 +138,89 @@ function LeadFieldsService ({ values, formDisabled, handleInputChange, errors })
                     errors={errors}
                 />
             );
+        case 'bed bug inspection':
+            return (
+                <LeadFieldsBedBugInspection
+                    values={values}
+                    formDisabled={formDisabled}
+                    handleInputChange={handleInputChange}
+                    errors={errors}
+                />
+            );
+        case 'bed bug treatment':
+            return (
+                <LeadFieldsBedBugTreatment
+                    values={values}
+                    formDisabled={formDisabled}
+                    handleInputChange={handleInputChange}
+                    errors={errors}
+                />
+            );
+        case 'extreme bed bug':
+            return (
+                <LeadFieldsExtremeBedBug
+                    values={values}
+                    formDisabled={formDisabled}
+                    handleInputChange={handleInputChange}
+                    errors={errors}
+                />
+            );
+        case 'bird exclusion':
+            return (
+                <LeadFieldsBirdExclusion
+                    values={values}
+                    formDisabled={formDisabled}
+                    handleInputChange={handleInputChange}
+                    errors={errors}
+                />
+            );
+        case 'bird trapping':
+            return (
+                <LeadFieldsBirdTrapping
+                    values={values}
+                    formDisabled={formDisabled}
+                    handleInputChange={handleInputChange}
+                    errors={errors}
+                />
+            );
+        case 'dewebbing':
+            return (
+                <LeadFieldsDewebbing
+                    values={values}
+                    formDisabled={formDisabled}
+                    handleInputChange={handleInputChange}
+                    errors={errors}
+                />
+            );
+        case 'exterior rodent':
+            return (
+                <LeadFieldsExteriorRodent
+                    values={values}
+                    formDisabled={formDisabled}
+                    handleInputChange={handleInputChange}
+                    errors={errors}
+                />
+            );
+        case 'interior rodent':
+            return (
+                <LeadFieldsInteriorRodent
+                    values={values}
+                    formDisabled={formDisabled}
+                    handleInputChange={handleInputChange}
+                    errors={errors}
+                />
+            );
+        case 'rodent exclusion':
+            return (
+                <LeadFieldsRodentExclusion
+                    values={values}
+                    formDisabled={formDisabled}
+                    handleInputChange={handleInputChange}
+                    errors={errors}
+                />
+            );
         default:
-            return <div>Unknown Service Type</div>;
-            
+            return <div>Unknown Service Type</div>;     
     }
 };
 

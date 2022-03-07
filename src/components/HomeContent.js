@@ -17,11 +17,17 @@ import { useNavigate, createSearchParams } from 'react-router-dom';
 function HomeContent() {
   const navigate = useNavigate();
 
-  function goToLeads(status) {
+  function goToLeadsByStatus(status) {
     const params = { status };
     navigate({
       pathname: '/leads',
       search: `?${createSearchParams(params)}`
+    });
+  };
+
+  function goToSearchLeads() {
+    navigate({
+      pathname: '/leads/search',
     });
   };
 
@@ -46,7 +52,7 @@ function HomeContent() {
 
       {/* Start cards */}
       <Container maxWidth="md" component="main">
-        <Grid container spacing={5} alignItems="flex-end" columns={8}>
+        <Grid container spacing={5} alignItems="flex-end" columns={12}>
           {leadStatusTypes.map((statusType) => (
             <Grid
               item
@@ -78,7 +84,7 @@ function HomeContent() {
                 </CardContent>
                 <CardActions>
                     <Button
-                      onClick={() => goToLeads(statusType.field)}
+                      onClick={() => goToLeadsByStatus(statusType.field)}
                       fullWidth variant='outlined'
                     >
                       View {statusType.title} Leads
@@ -87,6 +93,44 @@ function HomeContent() {
               </Card>
             </Grid>
           ))}
+          <Grid
+              item
+              key={"search"}
+              xs={12}
+              md={4}
+            >
+              <Card>
+                <CardHeader
+                  title={"Search"}
+                  titleTypographyProps={{ align: 'center' }}
+                  sx={{
+                    backgroundColor: (theme) =>
+                      theme.palette.mode === 'light'
+                        ? theme.palette.grey[200]
+                        : theme.palette.grey[700],
+                  }}
+                />
+                <CardContent>
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'baseline',
+                      mb: 2,
+                    }}
+                  >
+                  </Box>
+                </CardContent>
+                <CardActions>
+                    <Button
+                      onClick={() => goToSearchLeads()}
+                      fullWidth variant='outlined'
+                    >
+                      Search Leads
+                    </Button>
+                </CardActions>
+              </Card>
+            </Grid>
         </Grid>
       </Container>
       {/* End cards */}
